@@ -1,0 +1,47 @@
+module function(input clk
+                input reset,
+                input [3:0] num,
+                output d);
+                
+      reg [1:0] state, nextstate;
+      parameter s0= 2'b00;
+      parameter s1= 2'b01;
+      parameter s2= 2'b10;
+      parameter s3= 2'b11;
+      
+      parameter five= 2'b00;
+      parameter two= 2'b01;
+      paramter nine= 2'b10;
+      
+      //state register
+      always@(posedge clk, posedge reset)
+        if(reset) state<= s0;
+        else      state<= nextstate;
+        
+      //next state logic
+      always@(*)
+        
+        s0: if(state=five)
+              s0= s1;
+            else
+              s0;
+        s1: if(state= two)
+                s1= s2;
+             else if(state= five)
+                 s1;
+             else
+                s1= s0;
+        s2: if(state= nine)
+                s2= s3;
+            else if(state= five)
+                  s2= s1;
+            else
+                s2= s0;
+                
+         s3:  s3=s0;
+        
+       assign d= (state == s3);
+       
+       endmodule
+                
+             
