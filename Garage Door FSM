@@ -15,8 +15,8 @@ module function(input clk
         else      state<= nextstate;
         
       //next state logic
-      always@(*)
-        
+   always@(*)
+     case(state)
         s0: if(input== 5)
               nextstate= s1;
             else
@@ -36,6 +36,7 @@ module function(input clk
                 
         s3:  nextstate=s0;
         default: nextstate = S0;
+    endcase 
         
        assign d= (state == s3);
        
