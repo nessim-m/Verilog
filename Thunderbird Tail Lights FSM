@@ -1,0 +1,54 @@
+module turnSignalFSM (input clk, reset,
+                       input left, right,
+                      output LC, LB, LA, RA, RB, RC);
+                      
+      reg [1:0] state, nextstate;
+      
+        parameter S0 = 3'b000;
+        parameter S1 = 3'b001;
+        parameter S2 = 3'b010;
+        parameter S3 = 3'b011;
+        parameter S4 = 3'b100;
+        parameter S5 = 3'b101;
+        parameter S6 = 3'b110;
+        
+        // state register
+          always @ (posedge clk, posedge reset)
+          if (reset) state <= S0;
+          else state <= nextstate;
+          
+          
+          // next state logic
+           always @ (*)
+           case (state)
+           S0:  if(input== left)
+                nextstate = S1;
+                else if(input== right)
+                nextstate= s4;
+                else
+                nextstate=s0;
+         
+           S1: nextstate = S2;
+           S2: nextstate = S3;
+           S3: nextstate = S0;
+           S4: nextstate = S5;
+           S5: nextstate = S6;
+           S6: nextstate = S0;
+           default: nextstate = S0;
+           
+           endcase
+           
+           // output logic
+           assign LA = (state == S1);
+           assign LB = (state == S2);
+           assign LC = (state == S3);
+           assign RA = (state == S4);
+           assign RB = (state == S5);
+           assign RC = (state == S6);
+          
+endmodule
+
+        
+        
+                      
+                      
